@@ -7,9 +7,6 @@ export class AuthUserController {
     const { email, password } = req.body;
 
 
-
-
-
     try {
         const authUser = new AuthUser(userRepository);
         const token = await authUser.execute({email, password});

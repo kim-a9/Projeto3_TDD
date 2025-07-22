@@ -4,6 +4,7 @@ import { AuthUserController } from '../AuthUserController';
 import { GetUserByIdController } from '../GetUserByIdController';
 import { UpdateUserByController } from '../UpdateUserByIdController';
 import { DeleteUserByIdController } from '../DeleteUserByIdController';
+import { authenticateUser } from '../../../shared/middlewares/authMiddlewares';
 
 const router = Router(); 
 
@@ -22,12 +23,12 @@ router.post('/login', async (req, res) => {
   await login.handle(req, res);
 });
 
-router.get('/:id', async (req, res) => {
-  await getUserByIdController.handle(req, res);
+router.get('/me', authenticateUser, async (req, res) => {
+  res.json({message: 'Esta rota está protegida', user: req.user});
 });
 
-router.get('/me', async (req, res) => {
-  res.json({message: 'Esta rota está protegida', user: req.user});
+router.get('/:id', async (req, res) => {
+  await getUserByIdController.handle(req, res);
 });
 
 router.patch('/:id', async (req, res) => {
@@ -37,5 +38,6 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   await deleteUserByIdController.handle(req, res );
 });
+
 
 export { router as userRoutes };
