@@ -10,7 +10,7 @@ export function authenticateUser(req: Request, res: Response, next: NextFunction
         res.status(401).json({message: 'Token não enviado'});
         return;
     }
-
+ 
     const token = authHeader.split(" ")[1];
 
     try{ 
