@@ -1,6 +1,6 @@
-import { randomUUID } from 'crypto';
 import { User } from '../entities/User';
 import { UserRepository } from '../repositories/UserRepository';
+import bcrypt from 'bcrypt';
 
 export interface ICreateUserInput {
   name: string;
@@ -18,16 +18,17 @@ export class CreateUser {
       throw new Error('Usuário já existe com esse e-mail');
     }
 
+    const hsPassword = await bcrypt.hash(data.password, 10)
+
     const user = new User(
-      randomUUID(),
       data.name,
       data.login,
       data.email,
-      data.password
+      hsPassword
     );
 
-    await this.userRepository.save(user);
+    const newUser = await this.userRepository.save(user);
 
-    return user;
+    return newUser;
   }
 }

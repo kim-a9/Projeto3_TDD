@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserController = void 0;
-const repositoryInstance_1 = require("../../infra/database/repositoryInstance");
 const CreateUser_1 = require("../../core/usecases/CreateUser");
+const repositoryInstance_1 = require("../../infra/database/repositoryInstance");
 class CreateUserController {
     async handle(req, res) {
         const { name, login, email, password } = req.body;

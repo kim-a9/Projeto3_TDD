@@ -1,5 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userRepository = void 0;
-const InMemoryUserRepository_1 = require("../database/InMemoryUserRepository");
-exports.userRepository = new InMemoryUserRepository_1.InMemoryUserRepository();
+const MongoUserRepository_1 = require("../database/MongoUserRepository");
+exports.userRepository = new MongoUserRepository_1.MongoUserRepository();

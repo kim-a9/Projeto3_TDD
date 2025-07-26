@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = __importDefault(require("./infra/server/server"));
-server_1.default.listen(3000, () => {
+const PORT = process.env.PORT;
+server_1.default.listen(PORT, () => {
     console.log('Servidor rodando em http://localhost:3000');
 });

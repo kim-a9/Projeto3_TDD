@@ -6,7 +6,11 @@ class GetUserById {
         this.userRepository = userRepository;
     }
     async execute(id) {
-        return this.userRepository.findById(id);
+        const userFound = await this.userRepository.findById(id);
+        if (!userFound) {
+            throw new Error('Usuário não encontrado');
+        }
+        return userFound;
     }
 }
 exports.GetUserById = GetUserById;

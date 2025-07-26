@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUser = void 0;
-const crypto_1 = require("crypto");
 const User_1 = require("../entities/User");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 class CreateUser {
     constructor(userRepository) {
         this.userRepository = userRepository;
@@ -12,9 +15,10 @@ class CreateUser {
         if (existing) {
             throw new Error('Usuário já existe com esse e-mail');
         }
-        const user = new User_1.User((0, crypto_1.randomUUID)(), data.name, data.login, data.email, data.password);
-        await this.userRepository.save(user);
-        return user;
+        const hsPassword = await bcrypt_1.default.hash(data.password, 10);
+        const user = new User_1.User(data.name, data.login, data.email, hsPassword);
+        const newUser = await this.userRepository.save(user);
+        return newUser;
     }
 }
 exports.CreateUser = CreateUser;

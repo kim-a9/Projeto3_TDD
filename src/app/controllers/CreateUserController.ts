@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { userRepository } from '../../infra/database/repositoryInstance';
 import { CreateUser } from '../../core/usecases/CreateUser';
+import { userRepository } from '../../infra/database/repositoryInstance';
 
 export class CreateUserController {
   async handle(req: Request, res: Response): Promise<Response> {

@@ -7,6 +7,7 @@ class InMemoryUserRepository {
     }
     async save(user) {
         this.users.push(user);
+        return user;
     }
     async findByEmail(email) {
         const user = this.users.find((u) => u.email === email);

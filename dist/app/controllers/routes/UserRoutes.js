@@ -7,6 +7,7 @@ const AuthUserController_1 = require("../AuthUserController");
 const GetUserByIdController_1 = require("../GetUserByIdController");
 const UpdateUserByIdController_1 = require("../UpdateUserByIdController");
 const DeleteUserByIdController_1 = require("../DeleteUserByIdController");
+const authMiddlewares_1 = require("../../../shared/middlewares/authMiddlewares");
 const router = (0, express_1.Router)();
 exports.userRoutes = router;
 const createUserController = new CreateUserController_1.CreateUserController();
@@ -20,11 +21,11 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
     await login.handle(req, res);
 });
+router.get('/me', authMiddlewares_1.authenticateUser, async (req, res) => {
+    res.json({ message: 'Esta rota está protegida', user: req.user });
+});
 router.get('/:id', async (req, res) => {
     await getUserByIdController.handle(req, res);
-});
-router.get('/me', async (req, res) => {
-    res.json({ message: 'Esta rota está protegida', user: req.user });
 });
 router.patch('/:id', async (req, res) => {
     await updateUserByIdController.handle(req, res);

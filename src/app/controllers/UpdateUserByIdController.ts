@@ -8,13 +8,12 @@ export class UpdateUserByController{
         const { name, login, email, password } = req.body;
     
         try {
-          const updateUser = await userRepository.update({id, name, login, email, password})
-    
-           res.json(updateUser);
-            return res.status(201).json({
-              message: 'Usuário atualizado com sucesso',
-              user: updateUser
-            });
+          const updateUser = await userRepository.updateUser({id, name, login, email, password})
+
+          return res.status(201)
+          .json({message: 'Usuário atualizado com sucesso', 
+            user: updateUser});
+            
         } catch (error: any) {
            return res.status(404).json({ error: error.message });
         }

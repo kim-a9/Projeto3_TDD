@@ -39,5 +39,11 @@ router.delete('/:id', async (req, res) => {
   await deleteUserByIdController.handle(req, res );
 });
 
+// { 
+//   "name": "kim", 
+//   "login": "kim_a", 
+//   "email": "email@example.com", 
+//   "password": "123456"
+// }
 
 export { router as userRoutes };
