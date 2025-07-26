@@ -1,6 +1,5 @@
 /node_modules
 /dist
 /coverage
-/img
 package-lock.json
 .env
