@@ -1,5 +1,7 @@
 import app from './infra/server/server';
 
-app.listen(3000, () => {
+const PORT = process.env.PORT;
+
+app.listen(PORT, () => {
   console.log('Servidor rodando em http://localhost:3000');
 });
