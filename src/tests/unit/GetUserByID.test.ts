@@ -1,7 +1,7 @@
 import { User } from '../../core/entities/User';
 import { InMemoryUserRepository } from '../../infra/database/InMemoryUserRepository';
-import {GetUserById} from '../../core/usecases/GetUserById';
-import {CreateUser} from '../../core/usecases/CreateUser';
+import { GetUserById } from '../../core/usecases/GetUserById';
+import { CreateUser } from '../../core/usecases/CreateUser';
 
 describe('GetUserById', () => {
     let userRepository: InMemoryUserRepository;
