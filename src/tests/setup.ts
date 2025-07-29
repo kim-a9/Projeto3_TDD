@@ -6,7 +6,7 @@ dotenv.config({
 
 });
 
-export default {
-    testTimeout: 10000,
-    maxConcurrency: 1,
-};
+// export default {
+//     testTimeout: 10000,
+//     maxConcurrency: 1,
+// };
