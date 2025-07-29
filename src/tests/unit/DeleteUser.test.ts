@@ -1,24 +1,48 @@
-// import {User} from '../../core/entities/User';
-// import {userRepository} from '../../infra/database/repositoryInstance';
-// import {DeleteUser} from '../../core/usecases/DeleteUser';
+import {User} from '../../core/entities/User';
+import { InMemoryUserRepository } from '../../infra/database/InMemoryUserRepository';
+import {DeleteUser} from '../../core/usecases/DeleteUser';
 
 
-// describe('DeleteUser', () => {
-//     let user: User
-//     beforeEach(() => {
-//         userRepository.users = [];
-//         user = new User('1', 'Usuario', 'user01', 'teste@example.com', '123456')
-//         userRepository.users.push(user);
-//     })
+describe('DeleteUser', () => {
+    let userRepository: InMemoryUserRepository;
+    let deleteUser: DeleteUser;
 
-//     it('deve apagar um usuario com sucesso', async () => {
-//         const deleteUser = new DeleteUser(userRepository);
-        
-//         await expect(deleteUser.execute(user.id));
+    beforeEach(() => {
+        userRepository = new InMemoryUserRepository();
+        deleteUser = new DeleteUser(userRepository);
+    });
 
-//         const deletedUser = await userRepository.findById(user.id);
+    it('deve apagar um usuario com sucesso', async () => {
+        const user = new User(
+            '123',
+            'Usuario', 
+            'usuario01',
+            'teste@example.com',
+            '123456'
+        )
+        await userRepository.save(user);
 
-//         expect(deletedUser).toBeNull();
+        await deleteUser.execute(user.id as string);
 
-//     })
-// })
+        const delUser = await userRepository.findById(user.id!);
+
+        expect(delUser).toBeNull();
+
+    });
+
+    it('deve retornar erro caso o usuario seja inexistente', async () => {
+        const user = new User(
+            '123',
+            'Usuario', 
+            'usuario01',
+            'teste@example.com',
+            '123456'
+        )
+        await userRepository.save(user);
+
+        await expect(deleteUser.execute('987')).rejects.toThrow('usuário não encontrado');
+
+    });
+
+
+});
