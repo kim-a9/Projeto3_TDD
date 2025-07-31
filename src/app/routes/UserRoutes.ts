@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { CreateUserController } from '../CreateUserController';
-import { AuthUserController } from '../AuthUserController';
-import { GetUserByIdController } from '../GetUserByIdController';
-import { UpdateUserByController } from '../UpdateUserByIdController';
-import { DeleteUserByIdController } from '../DeleteUserByIdController';
-import { authenticateUser } from '../../../shared/middlewares/authMiddlewares';
+import { CreateUserController } from '../controllers/CreateUserController';
+import { AuthUserController } from '../controllers/AuthUserController';
+import { GetUserByIdController } from '../controllers/GetUserByIdController';
+import { UpdateUserByController } from '../controllers/UpdateUserByIdController';
+import { DeleteUserByIdController } from '../controllers/DeleteUserByIdController';
+import { authenticateUser } from '../../shared/middlewares/authMiddlewares';
 
 const router = Router(); 
 

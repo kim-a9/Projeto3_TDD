@@ -1,5 +1,5 @@
 import express from 'express';
-import { userRoutes } from '../../app/controllers/routes/UserRoutes';
+import { userRoutes } from '../../app/routes/UserRoutes';
 import { connectToMongo } from '../../infra/database/mongoConnection';
 
 const app = express();
