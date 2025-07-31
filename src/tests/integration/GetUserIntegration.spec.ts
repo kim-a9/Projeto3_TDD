@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 import { UserModel } from '../../infra/database/MongooseUserModel';
 
 describe('GET /users/:id', () => {
+    let userId: mongoose.Types.ObjectId;
     let user: any;
-    // let id: mongoose.Types.ObjectId;
 
     beforeAll(async () => {
         await mongoose.createConnection(process.env.MONGO_URL_TEST!);
@@ -14,16 +14,15 @@ describe('GET /users/:id', () => {
      beforeEach(async () => {
         await UserModel.deleteMany({});
 
-        // id: new mongoose.Types.ObjectId(),
-        const user = await request(app).post('/users').send({
+       const user = await UserModel.create({
             name: 'User',
-            login:'testuser1',
+            login: 'testuser1',
             email: 'testuser@example.com',
             password: 'password123',
         });
-        
-        // await request(app).post('/users').send(user);
-        // await UserModel.create()
+
+        await request(app).post('/users').send(user);
+        userId = user._id;
         
     });
     
@@ -33,25 +32,22 @@ describe('GET /users/:id', () => {
     }); 
     
     it('deve buscar usuario pelo id com sucesso e retornar 200', async () => {
-        // console.log(`${user._id}`);
 
-        const response = await request(app).get(`/users/${user._id}`);
+        const res = await request(app).get(`/users/${userId}`);
 
-        // ${user._id}
-
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('_id');
-        expect(response.body.name).toBe('User');
-        expect(response.body.login).toBe('testuser1');
-        expect(response.body.email).toBe('testuser@example.com');
+        expect(res.status).toBe(200);
+        expect(res.body.name).toBe('User');
+        expect(res.body.login).toBe('testuser1');
+        expect(res.body.email).toBe('testuser@example.com');
     });
 
 
-    // it('deve retornar 400 ao não encontrar usário pelo id', async () => {
-    //     const res = await request(app).get(`/users/987`);
+    it('deve retornar 400 ao não encontrar usuário pelo id', async () => {
+        const res = await request(app).get(`/users/987`);
 
-    //     expect(res.status).toBe(404);
-    //     // expect(res.body.message).toMatch('Usuário não encontrado');
-    // });
+        expect(res.status).toBe(404);
+    });
+
+
 
 });

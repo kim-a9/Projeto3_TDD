@@ -45,7 +45,6 @@ describe('POST / users', () => {
     //         email: 'test@example.com',
     //         password: '654321'
     //     });
-    //     jest.spyOn(userRepository, 'findByEmail').mockRejectedValue('Usuário já existe com esse e-mail');
 
     //     expect(res.status).toBe(400);
     //     expect(res.body).toHaveProperty('error', 'Usuário já existe com esse e-mail');
