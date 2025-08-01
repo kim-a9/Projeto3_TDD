@@ -1,3 +1,3 @@
-import { InMemoryUserRepository } from '../database/InMemoryUserRepository';
+import { MongoUserRepository } from '../database/MongoUserRepository';
 
-export const userRepository = new InMemoryUserRepository();
+export const userRepository = new MongoUserRepository();

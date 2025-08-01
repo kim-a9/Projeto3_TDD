@@ -1,21 +1,50 @@
-import {User} from '../../core/entities/User';
-import {userRepository} from '../../infra/database/repositoryInstance';
+import { InMemoryUserRepository } from '../../infra/database/InMemoryUserRepository';
 import {UpdateUser} from '../../core/usecases/UpdateUser';
+import {CreateUser} from '../../core/usecases/CreateUser';
 
 describe('UpdateUser', () => {
-    let user: User
+    let userRepository: InMemoryUserRepository;
+    let createUser: CreateUser;
+    let updateUser: UpdateUser;
+
     beforeEach(() => {
-        userRepository.users = [];
-        user = new User('1', 'Usuario', 'user01', 'teste@example.com', '123456')
-        userRepository.users.push(user);
+        userRepository = new InMemoryUserRepository();
+        createUser = new CreateUser(userRepository);
+        updateUser = new UpdateUser(userRepository);
     });
 
     it('deve atualizar um usuário existente', async () => {
-        const updateUser = new UpdateUser(userRepository);
+        const user = await createUser.execute({
+            name: 'Kimberly', 
+            login: 'Kim09',
+            email: 'kimberly@example.com',
+            password: '123456'
+        });
 
-        const update = await updateUser.execute(user.id, {name: 'Kimberly Alves'});
+        const userFound = await userRepository.findById(user.id!);
 
-        expect(update.name).toBe('Kimberly Alves');
+        const updatedUser = await updateUser.execute(user.id!, {
+            name: 'Usuario', 
+            login: 'usuario01',
+            email: 'teste@example.com',
+            password: '123456'
+        });
+
+        expect(updatedUser.name).toBe('Usuario');
+        expect(updatedUser.login).toBe('usuario01');
+        expect(updatedUser.email).toBe('teste@example.com');
+        expect(updatedUser.password).toBe('123456');
+       
+    });
+
+    it('deve retornar erro caso o usuario seja inexistente', async () => {
+        await expect(
+            updateUser.execute('987', {
+                name: 'Usuario', 
+                login: 'usuario01',
+                email: 'teste@example.com'
+            })
+        ).rejects.toThrow('Não foi possível encontrar o usuário');
     });
 
 

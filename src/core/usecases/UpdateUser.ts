@@ -17,13 +17,12 @@ export class UpdateUser {
         if(!user){
             throw new Error('Não foi possível encontrar o usuário')
         }
-
         if(data.name) user.name = data.name;
         if(data.login) user.login = data.login;
         if(data.email) user.email = data.email;
         if(data.password) user.password = data.password;
         
-        return user
+        return user;
 
     }
 

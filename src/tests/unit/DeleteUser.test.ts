@@ -1,24 +1,48 @@
 import {User} from '../../core/entities/User';
-import {userRepository} from '../../infra/database/repositoryInstance';
+import { InMemoryUserRepository } from '../../infra/database/InMemoryUserRepository';
 import {DeleteUser} from '../../core/usecases/DeleteUser';
 
 
 describe('DeleteUser', () => {
-    let user: User
+    let userRepository: InMemoryUserRepository;
+    let deleteUser: DeleteUser;
+
     beforeEach(() => {
-        userRepository.users = [];
-        user = new User('1', 'Usuario', 'user01', 'teste@example.com', '123456')
-        userRepository.users.push(user);
-    })
+        userRepository = new InMemoryUserRepository();
+        deleteUser = new DeleteUser(userRepository);
+    });
 
     it('deve apagar um usuario com sucesso', async () => {
-        const deleteUser = new DeleteUser(userRepository);
-        
-        await expect(deleteUser.execute(user.id));
+        const user = new User(
+            '123',
+            'Usuario', 
+            'usuario01',
+            'teste@example.com',
+            '123456'
+        )
+        await userRepository.save(user);
 
-        const deletedUser = await userRepository.findById(user.id);
+        await deleteUser.execute(user.id as string);
 
-        expect(deletedUser).toBeNull();
+        const delUser = await userRepository.findById(user.id!);
 
-    })
-})
+        expect(delUser).toBeNull();
+
+    });
+
+    it('deve retornar erro caso o usuario seja inexistente', async () => {
+        const user = new User(
+            '123',
+            'Usuario', 
+            'usuario01',
+            'teste@example.com',
+            '123456'
+        )
+        await userRepository.save(user);
+
+        await expect(deleteUser.execute('987')).rejects.toThrow('usuário não encontrado');
+
+    });
+
+
+});

@@ -5,6 +5,13 @@ export class GetUserById {
   constructor(private userRepository: UserRepository) {}
 
   async execute(id: string): Promise<User | null> {
-    return this.userRepository.findById(id);
+
+    const userFound = await this.userRepository.findById(id);
+
+    if(!userFound){
+      throw new Error('Usuário não encontrado');
+    }
+    return userFound;
+    
   }
 }
