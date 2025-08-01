@@ -46,4 +46,18 @@ npm test
 Certifique-se de ter o Node.js e o npm instalados em sua máquina.
 
 
+# 🆕 Atualizações Recentes
+O projeto passou por melhorias significativas para torná-lo mais robusto. Confira as novidades:
 
+## 🔐 Autenticação com JWT
+- Implementação de autenticação baseada em JSON Web Tokens (JWT)
+- Rotas protegidas com middleware de verificação de token
+- Geração e validação de tokens seguros para sessões de usuário
+
+## 🧪 Testes de Integração Aprimorados
+- Uso de dados dinâmicos para testes mais realistas
+- Separação clara entre testes unitários e de integração
+
+## 🗄️ Conexão com MongoDB
+- Integração com banco de dados MongoDB usando mongoose
+- Modelos definidos para persistência de dados
