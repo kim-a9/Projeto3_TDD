@@ -6,7 +6,6 @@ describe('CreateUser', () => {
     let userRepository: InMemoryUserRepository;
     let createUser: CreateUser;
 
-   //implementação de testes inMemory 
     beforeEach(() => {
     userRepository = new InMemoryUserRepository();
     createUser = new CreateUser(userRepository);
