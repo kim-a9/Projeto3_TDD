@@ -10,7 +10,7 @@ export class UpdateUserByController{
         try {
           const updateUser = await userRepository.updateUser({id, name, login, email, password})
 
-          return res.status(201)
+          return res.status(204)
           .json({message: 'Usuário atualizado com sucesso', 
             user: updateUser});
             
