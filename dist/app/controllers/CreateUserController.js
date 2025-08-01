@@ -9,7 +9,7 @@ class CreateUserController {
         try {
             const createUser = new CreateUser_1.CreateUser(repositoryInstance_1.userRepository);
             const user = await createUser.execute({ name, login, email, password });
-            return res.status(201).json(user);
+            return res.status(200).json(user);
         }
         catch (error) {
             return res.status(400).json({ error: error.message });

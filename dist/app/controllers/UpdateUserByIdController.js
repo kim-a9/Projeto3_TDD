@@ -8,7 +8,7 @@ class UpdateUserByController {
         const { name, login, email, password } = req.body;
         try {
             const updateUser = await repositoryInstance_1.userRepository.updateUser({ id, name, login, email, password });
-            return res.status(201)
+            return res.status(204)
                 .json({ message: 'Usuário atualizado com sucesso',
                 user: updateUser });
         }
